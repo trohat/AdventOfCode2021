@@ -26,7 +26,7 @@ console.log(inputdata);
 
 console.log("");
 
-//doEqualTest(task1(testdata), 7);
+doEqualTest(task1(testdata), 7);
 
 console.time("Task 1");
 console.log("Task 1: " + task1(inputdata));
@@ -35,7 +35,6 @@ console.timeEnd("Task 1");
 console.log("");
 
 //doEqualTest(task2(testdata), 336);
-
 //console.time("Task 2");
 //console.log("Task 2: " + task2(inputdata));
 //console.timeEnd("Task 2");

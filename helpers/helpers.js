@@ -96,7 +96,7 @@ let ord = str => str.charCodeAt(0);
 const zeros = length => Array.from({ length }).map(() => 0);
 
 // combinatorics
-const getAllPermutations = (arr) => {
+const getAllPermutations = arr => {
     if (arr.length === 1) return [[...arr]];
     const permutations = [];
     arr.forEach((d, index) => {
