@@ -5,19 +5,12 @@ const splitLines = data => data.split(String.fromCharCode(10));
 const prepare = data => data;
 
 const task1 = data => {
-    total = [];
-    for (let i = 0; i < data[0].length; i++) {
-        total.push("");
-        for (const line of data) {
-            total[i] += line[i];
-        }
-    }
-    console.log(total);
+    data = data.rotateRight();
     let gamma = "";
     let epsilon = "";
-    for (let i = 0; i < total.length; i++) {
-        let zeros = total[i].countChar("0");
-        let ones = total[i].countChar("1");
+    for (let i = 0; i < data.length; i++) {
+        let zeros = data[i].countChar("0");
+        let ones = data[i].countChar("1");
         if (zeros >= ones) {
             gamma += "0";
             epsilon += "1";
@@ -26,7 +19,6 @@ const task1 = data => {
             epsilon += "0";
         }
     }
-    console.log("eg", gamma, epsilon);
     return parseInt(gamma, 2) * parseInt(epsilon, 2);
 };
 
@@ -49,7 +41,6 @@ const task2 = data => {
     oxygen = parseInt(data[0], 2);
     console.log("ox", oxygen);
     data = data2;
-    console.log(data);
     for (let i = 0; i < data[0].length; i++) {
         if (data.length == 1) break;
         total = "";
@@ -63,7 +54,6 @@ const task2 = data => {
         } else {
             data = data.filter(d => d[i] == "1");
         }
-        console.log(data);
     }
     CO2 = parseInt(data[0], 2);
     console.log("CO2", CO2);
