@@ -1,4 +1,4 @@
-console.log("AOC 2021 - ");
+console.log("AOC 2021 - Day 3: Binary Diagnostic");
 
 const splitLines = data => data.split(String.fromCharCode(10));
 

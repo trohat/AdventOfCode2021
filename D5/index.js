@@ -1,4 +1,4 @@
-console.log("AOC 2021 - ");
+console.log("AOC 2021 - Day 5: Hydrothermal Venture");
 
 const splitLines = data => data.split(String.fromCharCode(10));
 
@@ -62,7 +62,6 @@ const task = (data, task) => {
             }
         }
     }
-    console.log(map);
     let overlap = Object.values(map).filter(x => x > 1).length;
     return overlap;
 };
