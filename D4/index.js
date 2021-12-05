@@ -10,7 +10,7 @@ const prepare = data => {
 
 const task1 = ({ order, boards }) => {
     const boardSum = board => {
-        return board.reduce((acc, curr) => acc + curr.reduce((acc, curr) => acc + (curr === null ? 0 : curr), 0), 0);
+        return board.flat().sum();
     }
 
     for (const number of order) {
@@ -39,7 +39,7 @@ const task1 = ({ order, boards }) => {
 
 const task2 = ({ order, boards }) => {
     const boardSum = board => {
-        return board.reduce((acc, curr) => acc + curr.reduce((acc, curr) => acc + (curr === null ? 0 : curr), 0), 0);
+        return board.flat().sum();
     }
 
     for (const number of order) {
