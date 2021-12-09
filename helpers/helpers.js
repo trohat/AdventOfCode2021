@@ -16,6 +16,17 @@ Array.prototype.countChar = function (char) {
     return this.reduce((accumulator, str) => accumulator + str.split(char).length - 1, 0);
 }
 
+Array.prototype.removeAll = function (element) {
+    return this.filter(e => e !== element);
+}
+
+/*
+not implemented yet - simple filter does not work here
+Array.prototype.removeFirst = function (element) {
+    return this.filter(e => e !== element);
+}
+*/
+
 Array.prototype.compare = function (arr2) {
     if (this.length !== arr2.length) return false;
     let same = true;

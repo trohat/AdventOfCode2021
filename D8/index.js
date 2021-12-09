@@ -34,6 +34,11 @@ const task2 = data => {
     for (const line of data) {
         input = line[0].concat(line[1]);
         input.sort((a,b) => a.length - b.length);
+
+        // testing for all numbers in input
+        //input = [...new Set(input.map(x => x.split("").sort().join("")))];
+        //console.log(input);
+
         const myMapping = {};
 
         let two = input.find(n => n.length === 2).split("");
