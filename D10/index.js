@@ -1,4 +1,4 @@
-console.log("AOC 2021 - ");
+console.log("AOC 2021 - Day 10: Syntax Scoring");
 
 const splitLines = data => data.split(String.fromCharCode(10)).map( d => d.trim());
 
