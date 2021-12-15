@@ -6,7 +6,7 @@ const prepare = data => {
     const cavern = [];
     data.forEach((line, lineIndex) => {
         cavern.push([]);
-        line.split("").forEach((char, charIndex) => {
+        line.split("").forEach(char => {
             cavern[lineIndex].push(+char);
         })
     })
@@ -25,68 +25,7 @@ const task1 = cavern => {
             else risks[i].push(Math.min(risks[i][j-1], risks[i-1][j]) + cavern[i][j]);
         }
     }
-    console.log(risks);
     return risks[maxY][maxX];
-    /*
-    working with stack of paths ... not good
-    let paths = [];
-    paths.push({
-        x: 0,
-        y: 0,
-        risk: 0
-    });
-    let risks = [];
-    growing = true;
-    while (growing) {
-        growing = false;
-        newPaths = [];
-        for (const path of paths) {
-            if (path.x === maxX && path.y === maxY) {
-                risks.push(path.risk);
-            } else {
-                growing = true;
-                if (path.x < maxX) {
-                    newPaths.push({
-                        x: path.x + 1,
-                        y: path.y,
-                        risk: path.risk + cavern[path.y][path.x + 1]
-                    });
-                }
-                if (path.y < maxY) {
-                    newPaths.push({
-                        x: path.x,
-                        y: path.y + 1,
-                        risk: path.risk + cavern[path.y + 1][path.x]
-                    });
-                }
-            }
-        }
-        newPaths.sort((p1,p2) => {
-            if (p1.y === p2.y) return p1.x - p2.x;
-            else return p1.y - p2.y;
-        });
-        let cleanedPaths = [];
-        for (let i = 0; i < newPaths.length; i++) {
-            
-            
-        }
-        paths = newPaths;
-    }
-    return risks.min();
-    */
-
-    /*
-    working with permutations of directions ... even worse
-     let pathPattern = [];
-     for (let i = 0; i <= maxX-7; i++) {
-         pathPattern.push(0);
-     }
-     for (let i = 0; i <= maxY-7; i++) {
-         pathPattern.push(1);
-     }
-     let patterns = new Set(getAllPermutations(pathPattern));
-     console.log(patterns);
-     */
 };
 
 const task2 = smallCavern => {
@@ -95,6 +34,7 @@ const task2 = smallCavern => {
         return n;
     }
     
+    // building big map
     let cavern = [];
     size = smallCavern.length;
     for (let i = 0; i < 5; i++) {
@@ -108,6 +48,7 @@ const task2 = smallCavern => {
         }
     }
     
+    // first passing through - same as task 1
     maxX = cavern[0].length - 1;
     maxY = cavern.length - 1;
     let risks = [];
@@ -120,10 +61,9 @@ const task2 = smallCavern => {
         }
     }
     
+    // next passings
     let changed = true;
-    let steps = 0;
     while (changed) {
-        steps++;
         changed = false;
         for (let i = 0; i < risks.length; i++) {
             for (let j = 0; j < risks[0].length; j++) {
@@ -142,10 +82,7 @@ const task2 = smallCavern => {
                 }
             }
         }
-        console.log(steps);
-
     }
-    console.log(risks);
     return risks[maxY][maxX];
 }
 
@@ -168,7 +105,7 @@ console.log(testdata);
 inputdata = prepare(splitLines(inputdata));
 
 console.log("Input data:");
-//console.log(inputdata);
+console.log(inputdata);
 
 console.log("");
 
