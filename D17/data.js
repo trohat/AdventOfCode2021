@@ -1,0 +1,1 @@
+let inputdata = `target area: x=124..174, y=-123..-86`;
