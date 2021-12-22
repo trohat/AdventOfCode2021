@@ -54,16 +54,10 @@ const task2 = steps => {
     const xLen = xBorders.length;
     const yLen = yBorders.length;
     const zLen = zBorders.length;
-    let onSquares = [];
-    for (let i = 0; i < xLen; i++) {
-        onSquares.push([]);
-        for (let j = 0; j < yLen; j++) {
-            onSquares[i].push([]);
-            for (let k = 0; k < zLen; k++) {
-                onSquares[i][j].push(false);
-            }
-        }
-    }
+    onSquares = new Int8Array(xLen * yLen * zLen);
+    let yCoef = xLen;
+    let zCoef = xLen * yLen;
+
     console.timeEnd("Construct");
 
     console.time("Process");
@@ -78,11 +72,8 @@ const task2 = steps => {
         for (let i = x1; i < x2; i++) {
             for (let j = y1; j < y2; j++) {
                 for (let k = z1; k < z2; k++) {
-                    let str = `${i},${j},${k}`;
-                    if (rule === "on") {
-                        onSquares[i][j][k] = true;
-                    }
-                    else onSquares[i][j][k] = false;
+                    if (rule === "on") onSquares[k * zCoef + j * yCoef + i] = true;
+                    else onSquares[k * zCoef + j * yCoef + i] = false;
                 }
             }
         }
@@ -92,31 +83,18 @@ const task2 = steps => {
     console.time("Result");
 
     let total = 0;
-    /*
-    for (const square of onSquares) {
-        let [x1, y1, z1] = square.split(",").map(Number);
-        let x2 = xBorders[x1 + 1];
-        x1 = xBorders[x1];
-        let y2 = yBorders[y1 + 1];
-        y1 = yBorders[y1];
-        let z2 = zBorders[z1 + 1];
-        z1 = zBorders[z1];
-        let area = (x2 - x1) * (y2 - y1) * (z2 - z1);
-        total += area;
-    }
-    */
-   for (let i = 0; i < xLen; i++) {
-       for (let j = 0; j < yLen; j++) {
-           for (let k = 0; k < zLen; k++) {
-               if (onSquares[i][j][k]) {
-                   let x2 = xBorders[i + 1];
-                   let x1 = xBorders[i];
-                   let y2 = yBorders[j + 1];
-                   let y1 = yBorders[j];
-                   let z2 = zBorders[k + 1];
-                   let z1 = zBorders[k];
-                   let area = (x2 - x1) * (y2 - y1) * (z2 - z1);
-                   total += area;
+    for (let i = 0; i < xLen; i++) {
+        let x2 = xBorders[i + 1];
+        let x1 = xBorders[i];
+        for (let j = 0; j < yLen; j++) {
+            let y2 = yBorders[j + 1];
+            let y1 = yBorders[j];
+            for (let k = 0; k < zLen; k++) {
+                if (onSquares[k * zCoef + j * yCoef + i]) {
+                    let z2 = zBorders[k + 1];
+                    let z1 = zBorders[k];
+                    let area = (x2 - x1) * (y2 - y1) * (z2 - z1);
+                    total += area;
                 }
             }
         }
