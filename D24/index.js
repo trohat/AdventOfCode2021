@@ -4,7 +4,7 @@ const splitLines = data => data.split(String.fromCharCode(10));
 
 const prepare = data => {
     const instructions = [];
-    const re = /(\w{3}) (\w) ?(\w|-?\d+)?/;
+    const re = /(\w{3}) (\w) ?(\w+|-?\d+)?/;
     for (const line of data) {
         [ , instr, a, b ] = re.exec(line);
         instructions.push({ instr, a, b});
@@ -19,49 +19,32 @@ let varMapping = {
     "z": 3
 };
 
-const monad = (instructions, inputString) => {
+const monad = (instructions, input) => {
     let processingUnit = zeros(4);
     console.log(processingUnit);
-    let step = 0;
-    let log = false;
     for (const instr of instructions) {
-        step++;
-        if (step > 0) log = true;
-        if (log) {
-            console.log(processingUnit);
-            console.log(instr)
-        }
-        if (step > 20) break;
-        let a = varMapping[instr.a];
-        let b = /[wxyz]/.exec(instr.b) ? processingUnit[varMapping[instr.b]] : instr.b;
+        let a = +varMapping[instr.a];
+        let b = /[wxyz]/.exec(instr.b) ? processingUnit[varMapping[instr.b]] : +instr.b;
+        if (instr.a === "z") console.log(instr);
         switch (instr.instr) {
             case "inp":
-                processingUnit[a] = inputString.at(0);
-                inputString = inputString.slice(1);
+                processingUnit[a] = +input.at(0);
+                input = input.slice(1);
                 break;
             case "add":
-                if (+b === 0) ;
-                else if (+processingUnit[a] === 0) processingUnit[a] = b;
-                else processingUnit[a] = "(" + processingUnit[a] + "+" + b + ")";
+                processingUnit[a] += b;
                 break;
             case "mul":
-                if (+b === 0 || +processingUnit[a] === 0) processingUnit[a] = 0;
-                else processingUnit[a] = "(" + processingUnit[a] + "*" + b + ")";
+                processingUnit[a] *= b;
                 break;
             case "div":
-                if (+processingUnit[a] === 0) ;
-                else processingUnit[a] = "(" + processingUnit[a] + "/" + b + ")";
+                processingUnit[a] = Math.trunc(processingUnit[a] / b);
                 break;
             case "mod":
-                if (+processingUnit[a] === 0) ;
-                else processingUnit[a] = "(" + processingUnit[a] + "%" + b + ")";
+                processingUnit[a] %= b;
                 break;
             case "eql":
-                processingUnit[a] = "(" + processingUnit[a] + "eq" + b + ")";
-                if (/\(\(-?\d+eq[ABCDEFGHIJKLMN]\)eq0\)$/.exec(processingUnit[a])) {
-                    console.log(processingUnit[a]);
-                    processingUnit[a] = 0;
-                }
+                processingUnit[a] = processingUnit[a] === b ? 1 : 0;
                 break;
             default:
                 console.warn("Unknown MONAD instruction.")
@@ -72,7 +55,7 @@ const monad = (instructions, inputString) => {
 
 const task1 = instructions => {
 
-    return monad(instructions, "ABCDEFGHIJKLMN").join("   ");
+    return monad(instructions, "39999698799429");
 };
 
 const task2 = data => {
